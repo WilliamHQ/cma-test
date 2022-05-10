@@ -3,7 +3,6 @@
 测试Linux内核CMA(Contiguous Memory Allocator)功能的模块。
 
 ## Table of contents
-* [License](#license)
 * [Usage](#usage)
     * [Welcome to cma test](#welcome-to-cma-test)
     * [Building](#building)
@@ -18,28 +17,6 @@
         * [Result](#result)
         * [Remove module](#remove-module)
 
-## License   
-MIT License
-
-Copyright (c) 2022 William.H.Chiu
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
 ## Usage
 
 ### Welcome to cma test.
@@ -96,12 +73,12 @@ cma=nn[MG]@[start[MG][-end[MG]]] [ARM,X86,KNL]
 cma=1G@5G
 ```
 
-在运行的系统中，查询是否有CMA预留参数可以使用下面命令：
+如果需要检查CMA是否预留成功，可以执行下面的命令：
 ~~~
-# cat /proc/cmdline | grep cma
+# cat /proc/meminfo |  grep Cma
+CmaTotal:        1048576 kB
+CmaFree:         1048576 kB
 ~~~
-
-如果输出中包含cma参数，则表示运行内核启动时有cma预留。
 
 #### Kernel symbol
 CMA功能默认只提供给内核中的函数调用，CMA的相关接口没有做符号导出(EXPORT_SYMBOL)，启动后加载的内核模块要使用CMA功能需要获取对应的接口的符号地址。
