@@ -16,6 +16,7 @@
         * [Load module](#load-module)
         * [Result](#result)
         * [Remove module](#remove-module)
+* [Article](#article)
 
 ## Usage
 
@@ -135,3 +136,5 @@ cma-test模块有三个模块参数，分别对应上述的三个内核符号地
 # rmmod cmatest
 ```
 
+# Article
+[在Linux内核模块中使用CMA内存分配](https://blog.csdn.net/willhq/article/details/124602370)
