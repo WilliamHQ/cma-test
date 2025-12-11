@@ -1,5 +1,6 @@
 #include "test_khead.h"
 #include "cma_test.h"
+#include <linux/ktime.h>
 
 
 static unsigned long area_base = 0;
@@ -20,6 +21,9 @@ cma_release_t cma_release=NULL;
 struct cma * dma_cma_p = NULL;
 
 struct page * buf=NULL;
+
+ktime_t start, end;
+s64 delta_ns;
 
 int cma_test_init(void)
 {
@@ -43,7 +47,14 @@ int cma_test_init(void)
     
     dma_cma_p = (struct cma *)(*(unsigned long *)area_base);
 
-    buf = cma_alloc(dma_cma_p,0x20000,(1<<PAGE_SHIFT));
+    printk("Measuring cma_alloc...\n");
+    start = ktime_get();
+    buf = cma_alloc(dma_cma_p, 0x120000, (1<<PAGE_SHIFT));
+    end = ktime_get();
+    delta_ns = ktime_to_ns(ktime_sub(end, start));
+    printk("cma_alloc succeeded. Time taken: %lld ns (%lld ms)\n",
+                delta_ns, delta_ns / 1000000);
+
     p = page_to_virt(buf);
     
     printk("alloc pages:buf:0x%lx:0x%lx.\n",buf,p);
@@ -59,7 +70,15 @@ void cma_test_exit(void)
     printk("exit CMA test mod.\n");
 
     if(buf)
-       cma_release(dma_cma_p, buf,0x20000);
+    {
+        printk("Measuring cma_release...\n");
+        start = ktime_get();
+        cma_release(dma_cma_p, buf, 0x120000);
+        end = ktime_get();
+        delta_ns = ktime_to_ns(ktime_sub(end, start));
+        printk("cma_release succeeded. Time taken: %lld ns (%lld ms)\n",
+                delta_ns, delta_ns / 1000000);
+    }
 
     return;    
 }
