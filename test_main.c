@@ -1,6 +1,6 @@
-#include "include/test_khead.h"
-#include "cma_test.h"
+#include <linux/module.h>
 
+#include "cma_test.h"
 
 int __init test_init(void)
 {
@@ -19,6 +19,5 @@ module_exit(test_exit);
 
 
 MODULE_LICENSE("GPL");
-MODULE_VERSION("V100");
-MODULE_DESCRIPTION("simple_kernel_test");
-
+MODULE_VERSION("dev");
+MODULE_DESCRIPTION("menguozi_kernel_test");
